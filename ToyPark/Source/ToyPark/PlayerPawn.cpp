@@ -9,11 +9,14 @@ APlayerPawn::APlayerPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	RootComponent = Camera;
+	
+	Scene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	Scene->SetupAttachment(RootComponent);
 	
 	bat = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Bat"));
-	bat->SetupAttachment(Camera);
+	bat->SetupAttachment(Scene);
 }
 
 void APlayerPawn::MoveForward(float value)
@@ -38,12 +41,18 @@ void APlayerPawn::LookUp(float value)
 {
 	if(bCanLook)
 		Camera->AddRelativeRotation(FRotator(value * LookSensitivity, 0, 0));
+	else
+		Scene->AddLocalRotation(FRotator(value * SwingSensitivity, 0, 0));
+
 }
 
 void APlayerPawn::LookRight(float value)
 {
 	if(bCanLook)
 		Camera->AddRelativeRotation(FRotator(0, value * LookSensitivity, 0));
+	else
+		Scene->AddLocalRotation(FRotator(0, value * SwingSensitivity, 0));
+	
 }
 
 void APlayerPawn::ToggleLook(bool canLook)

@@ -18,11 +18,14 @@ class TOYPARK_API APlayerPawn : public APawn
 
 private:
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPROPERTY(EditAnywhere, Category = "Components")
 	UStaticMeshComponent* bat;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UCameraComponent* Camera;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+	USceneComponent* Scene;
 
 	UPROPERTY(VisibleAnywhere)
 	bool bCanLook;
@@ -58,4 +61,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	float LookSensitivity;
+	UPROPERTY(EditAnywhere, Category = "Input")
+	float SwingSensitivity;
 };
